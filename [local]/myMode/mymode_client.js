@@ -1,4 +1,6 @@
-const spawnPos = [705.245, 600.950, 128.461];
+const spawnPos = [-1077, -1606, 4];
+
+console.log("test hello")
 
 on('onClientGameTypeStart', () => {
     exports.spawnmanager.setAutoSpawnCallback(() => {
@@ -79,3 +81,39 @@ RegisterCommand('getPosition', (source, args) => {
         args: [` [ ${coords[0]} ${coords[1]} ${coords[2]} ]`]
     })
 }, false)
+
+RegisterCommand('getPed', (source, args) => {
+    console.log('PedID : ', PlayerPedId())
+    console.log('PlayerPed : ', GetPlayerPed())
+}, false)
+
+// on('chat:addMessage', (p1, p2) => {
+//     console.log("test haha")
+// })
+
+// onNet('chat:addMessage', (eventParam1, eventParam2) => {
+//     console.log(`${eventParam1.args[0]} : said ${eventParam1.args[1]} ...`)
+//     // emit("chat:addMessage", {
+//     //     args: [`${eventParam1.args[0]} : said ${eventParam1.args[1]} ...`]
+//     // })
+// })
+
+
+RegisterCommand('test', (source, args) => {
+    addMessage()
+}, false)
+
+const addMessage = () => {
+    setImmediate(() => {
+        emit('chat:addSuggestion', '/command', 'help text', [
+          {name:"paramName1", help:"param description 1"},
+          {name:"paramName1", help:"param description 2"}
+        ]);
+      });
+}
+
+RegisterCommand('pressK', () => {
+    console.log("press K")
+}, false)
+
+RegisterKeyMapping('pressK', 'pressKFunction', 'keyboard', 'K')
