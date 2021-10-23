@@ -1,3 +1,5 @@
+right_text = ""
+
 AddEventHandler("onClientGameTypeStart", function(source)
     TriggerServerEvent('EventManager:Server:getSaveLocation', source)
 end)
@@ -33,9 +35,7 @@ end
 
 RegisterNetEvent("Qooz:client:system_function:setRoleDisplay")
 AddEventHandler("Qooz:client:system_function:setRoleDisplay", function(role)
-    print(role)
-    print("setRoleDisplayyyy")
-    showText(role, -1, true)
+    right_text = role
 end)
 
 function showText(text, timeout, isRight)
@@ -65,3 +65,21 @@ function showText(text, timeout, isRight)
         end
     end)
 end
+
+Citizen.CreateThread(function()
+    while true do
+    Citizen.Wait(0)
+        SetTextRightJustify(true)
+        SetTextFont(2)
+        SetTextProportional(1)
+        SetTextScale(0.0, 2.0)
+        SetTextColour(128, 128, 128, 255)
+        SetTextDropshadow(0, 0, 0, 0, 255)
+        SetTextEdge(1, 0, 0, 0, 255)
+        SetTextDropShadow()
+        SetTextOutline()
+        SetTextEntry("STRING")
+        AddTextComponentString(right_text)
+        DrawText(0.005, 0.005)
+    end
+end)
