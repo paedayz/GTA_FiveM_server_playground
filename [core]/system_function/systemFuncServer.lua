@@ -12,7 +12,7 @@ AddEventHandler('EventManager:Server:getSaveLocation', function(source)
     MySQL.Async.fetchAll("SELECT * FROM `save_location` WHERE id=@source",
     {["source"] = source},
     function(result)
-        TriggerClientEvent("clientSpawn", -1, result[1].x, result[1].y, result[1].z)
+        TriggerClientEvent("clientSpawn", -1, result[1].x, result[1].y, result[1].z, "csb_money")
     end)
 end)
 
