@@ -9,10 +9,6 @@ AddEventHandler("Qooz:onDuty:showDialog", function(source, args)
     if client_id == -1 then
         client_id = source
     end
-
-    -- chat("testtt", {255, 0, 0})
-    -- chat("op234234en", {0, 255, 0})
-    
 end)
 
 AddEventHandler("Qooz:onDuty:closeDialog", function(source, args)
@@ -20,14 +16,10 @@ AddEventHandler("Qooz:onDuty:closeDialog", function(source, args)
     if client_id == -1 then
         client_id = source
     end
-
-    -- chat("clxcvose", {0, 0, 0})
-    
 end)
 
 --very important cb 
 RegisterNUICallback("exit", function(data)
-    chat("wthhhh", {0,255,0})
     SetDisplay(false)
 end)
 
@@ -46,14 +38,10 @@ RegisterNUICallback("main", function(data, cb)
     else 
         chat("Just free", {255 ,255, 255})
     end
-    -- TriggerServerEvent("Qooz:server:selectRole", client_id, data.role)
-    -- TriggerEvent("Qooz:client:system_function:setRoleDisplay", data.role)
-    -- result = TriggerServerEvent("Qooz:server:getAllRole")
     SetDisplay(false)
 end)
 
 RegisterNUICallback("error", function(data)
-    chat("wtffff", {255,0,0})
     SetDisplay(false)
 end)
 
@@ -125,7 +113,6 @@ end)
 CreateThread(function() 
     while true do
         if(markerStatus == "work" and userWorkingTime > 0) then
-            chat(userWorkingTime, {255, 0, 0})
             userWorkingTime = userWorkingTime - 1
         end
         Citizen.Wait(1000)

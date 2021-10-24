@@ -1,34 +1,41 @@
 local display = false
 local client_id = -1
+local finishWork = false
+local markerStatus = "idle"
+local userWorkingTime = 0
 
--- RegisterKeyMapping('nui', 'show nui', 'keyboard', 'N')
-
-AddEventHandler("Qooz:client:select_role:openCloseDialog", function(source, args)
+RegisterCommand("Qooz:client:menu:showDialog", function(source, args)
+    print("wtffff menu")
     SetDisplay(not display)
     if client_id == -1 then
         client_id = source
     end
-    
-end)
+end, false)
 
 --very important cb 
 RegisterNUICallback("exit", function(data)
-    chat("exited", {0,255,0})
     SetDisplay(false)
 end)
 
 -- this cb is used as the main route to transfer data back 
 -- and also where we hanld the data sent from js
 RegisterNUICallback("main", function(data, cb)
-    chat("Your role is ".. data.role, {0,255,0})
-    TriggerServerEvent("Qooz:server:selectRole", GetPlayerServerId(), data.role)
-    TriggerEvent("Qooz:client:system_function:setRoleDisplay", data.role)
-    -- result = TriggerServerEvent("Qooz:server:getAllRole")
+    chat(data.menu, {255, 0, 0})
+    if data.menu == "save" then
+        TriggerEvent("saveFunc")
+    elseif data.menu == "respawn" then
+        chat("respawnnn", {255, 0, 0})
+        TriggerEvent("clientRespawn")
+    elseif data.menu == "select_role" then
+        TriggerEvent("Qooz:client:select_role:openCloseDialog")
+    else 
+        chat("Something went wrong", {255, 0, 0})
+    end
+    
     SetDisplay(false)
 end)
 
 RegisterNUICallback("error", function(data)
-    chat(data.error, {255,0,0})
     SetDisplay(false)
 end)
 
@@ -70,5 +77,3 @@ function chat(str, color)
         }
     )
 end
-
-RegisterNetEvent("Qooz:client")

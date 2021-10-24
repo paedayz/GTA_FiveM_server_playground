@@ -1,6 +1,8 @@
 RegisterNetEvent('EventManager:Server:updateSaveLocation')
 AddEventHandler('EventManager:Server:updateSaveLocation', function(source, vector)
+    print(source)
     MySQL.Async.fetchAll("UPDATE `save_location` SET `x`=@x,`y`=@y,`z`=@z WHERE id=@source",
+    
         {["@x"] = vector.x, ["@y"] = vector.y, ["@z"] = vector.z, ["@source"] = source },
         function(result)
             print("update success")
@@ -9,6 +11,7 @@ end)
 
 RegisterNetEvent('EventManager:Server:getSaveLocation')
 AddEventHandler('EventManager:Server:getSaveLocation', function(source)
+    print(source)
     MySQL.Async.fetchAll("SELECT * FROM `save_location` WHERE id=@source",
     {["source"] = source},
     function(result)

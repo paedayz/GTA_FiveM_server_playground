@@ -20,18 +20,19 @@ AddEventHandler("clientSpawn", function(x, y, z, model)
     TriggerServerEvent("Qooz:server:system_function:getUserRole", GetPlayerServerId())
 end)
 
-RegisterCommand("clientRespawn", function(source, args)
-    TriggerServerEvent('EventManager:Server:getSaveLocation', source)
-end, false)
+AddEventHandler("clientRespawn", function()
+    print("wtzzzzz")
+    TriggerServerEvent('EventManager:Server:getSaveLocation', GetPlayerServerId())
+end)
 
-RegisterCommand("saveFunc", function(source, args)
+AddEventHandler("saveFunc", function()
     saveFunc(source)
-end, false)
+end)
 
-function saveFunc(source)
+function saveFunc()
     ped = PlayerPedId();
     coords = GetEntityCoords(ped)
-    TriggerServerEvent('EventManager:Server:updateSaveLocation', source, coords)
+    TriggerServerEvent('EventManager:Server:updateSaveLocation', GetPlayerServerId(), coords)
     showText("Game save", 5000, false)
 end
 
