@@ -28,7 +28,6 @@ $(function () {
   });
   
   function closeDialog(ans) {
-    console.log('closeeee seewaa')
       $.post("https://on_duty/main", JSON.stringify({ans: ans}))
       return
   }

@@ -117,7 +117,7 @@ AddEventHandler("Qooz:client:on_duty:setRoleModel", function(role, workingTime)
 
     TriggerEvent("clientSpawn", coords.x, coords.y, coords.z, model)
 
-    Citizen.SetTimeout(10000, function()
+    Citizen.SetTimeout(userWorkingTime * 1000, function()
         markerStatus = "finish"
     end)
 end)

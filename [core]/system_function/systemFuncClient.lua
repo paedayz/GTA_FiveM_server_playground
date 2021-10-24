@@ -31,7 +31,6 @@ end, false)
 function saveFunc(source)
     ped = PlayerPedId();
     coords = GetEntityCoords(ped)
-    print(coords)
     TriggerServerEvent('EventManager:Server:updateSaveLocation', source, coords)
     showText("Game save", 5000, false)
 end
