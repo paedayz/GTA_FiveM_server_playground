@@ -1,0 +1,43 @@
+body {
+    background: none !important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#container {
+    font-size: 20px;
+    padding: 25px;
+    color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(44, 44, 44, 0.76);
+    height: 200px;
+    width: 350px;
+    border: 2px solid aliceblue;
+    border-radius: 7px;
+    text-align: center;
+}
+
+.actionButtonWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 30px;
+}
+
+.actionButton {
+    width: 100px;
+    height: 50px;
+    background-color: rgb(107, 188, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    border-radius: 10px;
+}
+
+.actionButton:hover {
+    background-color: rgb(35, 154, 252);
+}

@@ -47,9 +47,8 @@ function showText(text, timeout, isRight)
             end)
         end
 
-
         while isShow do
-        Citizen.Wait(0)
+            Citizen.Wait(0)
             SetTextRightJustify(isRight)
             SetTextFont(2)
             SetTextProportional(1)
@@ -83,3 +82,61 @@ Citizen.CreateThread(function()
         DrawText(0.005, 0.005)
     end
 end)
+
+CreateThread(function()
+    isOpen = false
+	while true do
+		-- draw every frame
+		Wait(0)
+
+		local pedCoords = GetEntityCoords(PlayerPedId())
+        if math.abs(pedCoords.x - 1462.6295166015625) <= 1 and math.abs(pedCoords.y - 6545.54736328125) <= 1 then 
+            -- TriggerEvent("Qooz:onDuty:showDialog")
+            if isOpen == false then 
+                TriggerEvent("Qooz:onDuty:showDialog")
+                isOpen = true
+            end
+        else 
+            -- TriggerEvent("Qooz:onDuty:closeDialog")
+            if isOpen == true then
+                TriggerEvent("Qooz:onDuty:closeDialog")
+                isOpen = false
+            end
+        end
+		DrawMarker(
+            23,
+            1462.6295166015625,
+            6545.54736328125,
+            14.433249473571777 - 0.8,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            180.0,
+            0.0,
+            2.0,
+            2.0,
+            2.0,
+            255,
+            0,
+            0,
+            150,
+            false,
+            true,
+            2,
+            nil,
+            nil,
+            false)
+	end
+end)
+
+function chat(str, color)
+    TriggerEvent(
+        'chat:addMessage',
+        {
+            color = color,
+            multiline = true,
+            args = {str}
+        }
+    )
+end

@@ -10,9 +10,6 @@ $(function () {
   display(false);
   window.addEventListener("message", function (event) {
     var item = event.data;
-    console.log(item.type)
-    console.log(item.status)
-    console.log("listennnnnn")
     if (item.type === "ui") {
       if (item.status == true) {
         display(true);
