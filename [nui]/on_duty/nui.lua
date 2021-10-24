@@ -2,6 +2,7 @@ local display = false
 local client_id = -1
 local finishWork = false
 local markerStatus = "idle"
+local userWorkingTime = 0
 
 AddEventHandler("Qooz:onDuty:showDialog", function(source, args)
     SetDisplay(true)
@@ -36,11 +37,11 @@ RegisterNUICallback("main", function(data, cb)
     if data.ans then
         chat("Do your duty", {0,255,0})
         markerStatus = "work"
-        ped = GetPlayerPed(-1)
-        pedId = PlayerPedId()
-        chat(PlayerId(), {255, 0, 0})
-        chat(PlayerPedId(), {255, 0, 0})
-        chat(GetPlayerServerId(), {255, 0, 0})
+        -- ped = GetPlayerPed(-1)
+        -- pedId = PlayerPedId()
+        -- chat(PlayerId(), {255, 0, 0})
+        -- chat(PlayerPedId(), {255, 0, 0})
+        -- chat(GetPlayerServerId(), {255, 0, 0})
         TriggerServerEvent("Qooz:server:on_duty:getUserRole", GetPlayerServerId())
     else 
         chat("Just free", {255 ,255, 255})
@@ -98,7 +99,7 @@ end
 
 RegisterNetEvent("Qooz:client:on_duty:setRoleModel")
     
-AddEventHandler("Qooz:client:on_duty:setRoleModel", function(role)
+AddEventHandler("Qooz:client:on_duty:setRoleModel", function(role, workingTime)
     if role == "police" then
         model = "s_m_y_cop_01"
     elseif role == "mechanic" then 
@@ -108,6 +109,8 @@ AddEventHandler("Qooz:client:on_duty:setRoleModel", function(role)
     else 
         model = "csb_money"
     end
+
+    userWorkingTime = workingTime
 
     ped = GetPlayerPed(-1)
     coords = GetEntityCoords(ped)
@@ -119,6 +122,35 @@ AddEventHandler("Qooz:client:on_duty:setRoleModel", function(role)
     end)
 end)
 
+CreateThread(function() 
+    while true do
+        if(markerStatus == "work" and userWorkingTime > 0) then
+            chat(userWorkingTime, {255, 0, 0})
+            userWorkingTime = userWorkingTime - 1
+        end
+        Citizen.Wait(1000)
+    end
+end)
+
+CreateThread(function() 
+    while true do
+        Citizen.Wait(0)
+        if(markerStatus == "work" and userWorkingTime > 0) then
+            SetTextFont(2)
+            SetTextProportional(1)
+            SetTextScale(0.0, 2.0)
+            SetTextColour(128, 128, 128, 255)
+            SetTextDropshadow(0, 0, 0, 0, 255)
+            SetTextEdge(1, 0, 0, 0, 255)
+            SetTextDropShadow()
+            SetTextOutline()
+            SetTextEntry("STRING")
+            AddTextComponentString(userWorkingTime)
+            DrawText(0.005, 0.005)
+        end
+    end
+end)
+
 CreateThread(function()
     isOpen = false
     green = 0
@@ -127,7 +159,7 @@ CreateThread(function()
     
 	while true do
 		-- draw every frame
-		Wait(0)
+		Citizen.Wait(0)
 
 		local pedCoords = GetEntityCoords(PlayerPedId())
 
@@ -146,7 +178,7 @@ CreateThread(function()
                 6545.54736328125,
                 14.433249473571777 - 0.8, 
                 "csb_money")
-                
+
                 justFinish = true
 
                 Citizen.SetTimeout(1000, function()

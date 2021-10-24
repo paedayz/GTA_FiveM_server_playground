@@ -1,6 +1,8 @@
 right_text = ""
 user_role = ""
 
+TriggerServerEvent("Qooz:server:system_function:getUserRole", GetPlayerServerId())
+
 AddEventHandler("onClientGameTypeStart", function(source)
     TriggerServerEvent('EventManager:Server:getSaveLocation', source)
 end)
@@ -38,11 +40,6 @@ RegisterNetEvent("Qooz:client:system_function:setRoleDisplay")
 AddEventHandler("Qooz:client:system_function:setRoleDisplay", function(role)
     right_text = role
     user_role = role
-end)
-
-AddEventHandler("Qooz:client:system_function:getUserRole", function()
-    print("wtffff x")
-    return "testzztt"
 end)
 
 function showText(text, timeout, isRight)
